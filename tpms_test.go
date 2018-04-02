@@ -15,18 +15,13 @@ func TestTpms(t *testing.T) {
 	})
 
 	AfterEach(func() {
-		tires.Stop()
+		tires.StopMonitoring()
 	})
 
 	Describe("Tpms()", func() {
 
 		It("should return a Tpms object", func() {
 			AssertEqual(reflect.TypeOf(tires).String(), "*tpms.Tpms")
-		})
-
-		It("should ", func() {
-			// tires.scan()
-			// tires.Update()
 		})
 	})
 

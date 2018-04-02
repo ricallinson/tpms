@@ -8,6 +8,7 @@ import (
 
 func main() {
 	tires := tpms.NewTpms()
+	tires.Log("./log")
 	tires.StartMonitoring()
 	for {
 		for _, sensor := range tires.Read() {

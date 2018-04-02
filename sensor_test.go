@@ -4,6 +4,9 @@ import (
 	. "github.com/ricallinson/simplebdd"
 	"reflect"
 	"testing"
+	"os"
+	"log"
+	"fmt"
 )
 
 func TestSensor(t *testing.T) {
@@ -25,7 +28,16 @@ func TestSensor(t *testing.T) {
 		})
 
 		It("should ", func() {
-
+			file, err := os.Open("./fixtures/rawdata")
+			if err != nil {
+				log.Fatal(err)
+			}
+			data := make([]byte, 1872)
+			file.Read(data)
+			for i := 0; i <1872; i = i + 18 {
+				sensor.ParseData(data[i:])
+				fmt.Printf("kPa: %d, °C: %d\n", sensor.Kilopascal, sensor.Celsius)
+			}
 		})
 	})
 

@@ -10,10 +10,12 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"os"
 )
 
 type Tpms struct {
 	sensors [4]*Sensor
+	log *os.File
 }
 
 func NewTpms() *Tpms {
@@ -41,6 +43,10 @@ func (this *Tpms) StartMonitoring() {
 	}()
 }
 
+func (this *Tpms) Log(file string) {
+	this.log, _ = os.Create(file)
+}
+
 func (this *Tpms) StopMonitoring() {
 
 }
@@ -63,6 +69,9 @@ func (this *Tpms) updateSensor(a ble.Advertisement) {
 	}
 	if len(a.ManufacturerData()) > 0 {
 		this.sensors[pos-1].ParseData(a.ManufacturerData())
+		if this.log != nil {
+			this.log.Write(a.ManufacturerData())
+		}
 	}
 }
 
