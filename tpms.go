@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"github.com/go-ble/ble"
 	"github.com/go-ble/ble/examples/lib/dev"
+	"github.com/pkg/errors"
+	"log"
 	"strconv"
 	"strings"
 	"time"
-	"log"
-	"github.com/pkg/errors"
 )
 
 type Tpms struct {
@@ -28,27 +28,13 @@ func NewTpms() *Tpms {
 	return this
 }
 
-// func (this *Tpms) Scan() {
-// 	filter := func(a ble.Advertisement) bool {
-// 		return strings.HasPrefix(strings.ToUpper(a.LocalName()), "TPMS")
-// 	}
-// 	retry := 10
-// 	for !this.gotSensors() || retry > 0 {
-// 		retry--
-// 		ctx := ble.WithSigHandler(context.WithTimeout(context.Background(), 1*time.Second))
-// 		err := ble.Scan(ctx, false, this.updateSensor, filter)
-// 		checkBleError(err)
-// 	}
-// 	fmt.Println("Scan complete.")
-// }
-
 func (this *Tpms) StartMonitoring() {
 	filter := func(a ble.Advertisement) bool {
 		return strings.HasPrefix(strings.ToUpper(a.LocalName()), "TPMS")
 	}
 	go func() {
 		for {
-			ctx := ble.WithSigHandler(context.WithTimeout(context.Background(), 5*time.Second))
+			ctx := ble.WithSigHandler(context.WithTimeout(context.Background(), 1*time.Second))
 			err := ble.Scan(ctx, false, this.updateSensor, filter)
 			checkBleError(err)
 		}
@@ -70,7 +56,7 @@ func (this *Tpms) updateSensor(a ble.Advertisement) {
 	}
 	if this.sensors[pos-1] == nil {
 		this.sensors[pos-1] = &Sensor{
-			Id: pos,
+			Id:      pos,
 			Address: a.Addr(),
 		}
 		fmt.Printf("Sensor %d added.\n", pos)

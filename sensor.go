@@ -9,10 +9,10 @@ import (
 )
 
 type Sensor struct {
-	Id		 int
-	Address  ble.Addr
+	Id         int
+	Address    ble.Addr
 	Kilopascal int
-	Celsius     int
+	Celsius    int
 }
 
 func (this *Sensor) ParseData(b []byte) {

@@ -1,8 +1,8 @@
 package main
 
-import(
-	"github.com/ricallinson/tpms"
+import (
 	"fmt"
+	"github.com/ricallinson/tpms"
 	"time"
 )
 
@@ -16,7 +16,7 @@ func main() {
 			}
 		}
 		fmt.Println()
-		time.Sleep(5*time.Second)
+		time.Sleep(5 * time.Second)
 	}
 	tires.StopMonitoring()
 }
