@@ -24,6 +24,6 @@ func (this *Sensor) ParseData(b []byte) {
 	// fmt.Println("?", binary.BigEndian.Uint32(b[12:]) / 100000000)
 	// fmt.Println("t", binary.BigEndian.Uint16(b[16:]) / 1000)
 
-	this.Kilopascal = int(binary.BigEndian.Uint32(b[8:]) / 100000000)
-	this.Celsius = int(binary.BigEndian.Uint16(b[16:]) / 1000)
+	this.Kilopascal = int(binary.BigEndian.Uint32(b[9:]) / 10000000)
+	this.Celsius = int(binary.BigEndian.Uint32(b[14:]) / 1000)
 }
