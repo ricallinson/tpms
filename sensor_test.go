@@ -1,12 +1,13 @@
 package tpms
 
 import (
+	"fmt"
 	. "github.com/ricallinson/simplebdd"
+	"log"
+	"os"
 	"reflect"
 	"testing"
-	"os"
-	"log"
-	"fmt"
+	// "encoding/binary"
 )
 
 func TestSensor(t *testing.T) {
@@ -34,12 +35,11 @@ func TestSensor(t *testing.T) {
 			}
 			data := make([]byte, 1872)
 			file.Read(data)
-			for i := 0; i <1872; i = i + 18 {
-				// fmt.Println(data[i+1:i+4])
+			for i := 0; i < 1872; i = i + 18 {
 				// fmt.Println(data[i:i+18])
-				// fmt.Println(data[i+8:i+18])
+				// fmt.Println(binary.BigEndian.Uint64(data[i+2:]))
 				sensor.ParseData(data[i:])
-				fmt.Printf("kPa: %d, °C: %d\n", sensor.Kilopascal, sensor.Celsius)
+				fmt.Printf("kPa: %v, °C: %v\n", sensor.Kilopascal, sensor.Celsius)
 			}
 		})
 	})

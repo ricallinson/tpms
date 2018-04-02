@@ -7,15 +7,15 @@ import (
 	"github.com/go-ble/ble/examples/lib/dev"
 	"github.com/pkg/errors"
 	"log"
+	"os"
 	"strconv"
 	"strings"
 	"time"
-	"os"
 )
 
 type Tpms struct {
 	sensors [4]*Sensor
-	log *os.File
+	log     *os.File
 }
 
 func NewTpms() *Tpms {
