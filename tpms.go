@@ -39,21 +39,26 @@ func (this *Tpms) Close() {
 }
 
 func (this *Tpms) updateSensor(sensor *Sensor) {
+
+	filter := func(a ble.Advertisement) bool {
+		return strings.ToUpper(a.Addr().String()) == strings.ToUpper(sensor.Address.String())
+	}
+
 	ctx := ble.WithSigHandler(context.WithTimeout(context.Background(), 5*time.Second))
-	client, err := ble.Dial(ctx, sensor.Address)
+	adv, err := ble.Find(ctx, false, filter)
 	checkBleError(err)
 
-	fmt.Println(client.Name())
+	if len(adv) == 0 {
+		fmt.Printf("Could not connect to sensor %d\n", sensor.Id)
+		return
+	}
 
-	done := make(chan struct{})
-	go func() {
-		<-client.Disconnected()
-		fmt.Printf("[ %s ] is disconnected \n", client.Addr())
-		close(done)
-	}()
-
-	client.CancelConnection()
-	<-done
+	fmt.Printf("ManufacturerData for sensor %d\n", sensor.Id)
+	for _, a := range adv {
+		if len(a.ManufacturerData()) > 0 {
+			sensor.ParseData(a.ManufacturerData())
+		}
+	}
 }
 
 func (this *Tpms) scan() {
@@ -67,6 +72,7 @@ func (this *Tpms) scan() {
 		err := ble.Scan(ctx, false, this.registerSensor, filter)
 		checkBleError(err)
 	}
+	fmt.Println("Scan complete.")
 }
 
 func (this *Tpms) registerSensor(a ble.Advertisement) {
@@ -76,9 +82,10 @@ func (this *Tpms) registerSensor(a ble.Advertisement) {
 	}
 	if this.sensors[pos-1] == nil {
 		this.sensors[pos-1] = &Sensor{
+			Id: pos,
 			Address: a.Addr(),
 		}
-		fmt.Printf("Sensor %d found\n", pos)
+		fmt.Printf("Sensor %d detected.\n", pos)
 	}
 }
 
