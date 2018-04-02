@@ -15,7 +15,7 @@ func TestTpms(t *testing.T) {
 	})
 
 	AfterEach(func() {
-		tires.Close()
+		tires.Stop()
 	})
 
 	Describe("Tpms()", func() {
@@ -25,8 +25,8 @@ func TestTpms(t *testing.T) {
 		})
 
 		It("should ", func() {
-			tires.scan()
-			tires.Update()
+			// tires.scan()
+			// tires.Update()
 		})
 	})
 

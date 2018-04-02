@@ -28,54 +28,42 @@ func NewTpms() *Tpms {
 	return this
 }
 
-func (this *Tpms) Update() {
-	for _, sensor := range this.sensors {
-		this.updateSensor(sensor)
-	}
-}
+// func (this *Tpms) Scan() {
+// 	filter := func(a ble.Advertisement) bool {
+// 		return strings.HasPrefix(strings.ToUpper(a.LocalName()), "TPMS")
+// 	}
+// 	retry := 10
+// 	for !this.gotSensors() || retry > 0 {
+// 		retry--
+// 		ctx := ble.WithSigHandler(context.WithTimeout(context.Background(), 1*time.Second))
+// 		err := ble.Scan(ctx, false, this.updateSensor, filter)
+// 		checkBleError(err)
+// 	}
+// 	fmt.Println("Scan complete.")
+// }
 
-func (this *Tpms) Close() {
-
-}
-
-func (this *Tpms) updateSensor(sensor *Sensor) {
-
-	filter := func(a ble.Advertisement) bool {
-		return strings.ToUpper(a.Addr().String()) == strings.ToUpper(sensor.Address.String())
-	}
-
-	ctx := ble.WithSigHandler(context.WithTimeout(context.Background(), 5*time.Second))
-	adv, err := ble.Find(ctx, false, filter)
-	checkBleError(err)
-
-	if len(adv) == 0 {
-		fmt.Printf("Could not connect to sensor %d\n", sensor.Id)
-		return
-	}
-
-	fmt.Printf("ManufacturerData for sensor %d\n", sensor.Id)
-	for _, a := range adv {
-		if len(a.ManufacturerData()) > 0 {
-			sensor.ParseData(a.ManufacturerData())
-		}
-	}
-}
-
-func (this *Tpms) scan() {
+func (this *Tpms) StartMonitoring() {
 	filter := func(a ble.Advertisement) bool {
 		return strings.HasPrefix(strings.ToUpper(a.LocalName()), "TPMS")
 	}
-	retry := 10
-	for !this.gotSensors() || retry > 0 {
-		retry--
-		ctx := ble.WithSigHandler(context.WithTimeout(context.Background(), 1*time.Second))
-		err := ble.Scan(ctx, false, this.registerSensor, filter)
-		checkBleError(err)
-	}
-	fmt.Println("Scan complete.")
+	go func() {
+		for {
+			ctx := ble.WithSigHandler(context.WithTimeout(context.Background(), 5*time.Second))
+			err := ble.Scan(ctx, false, this.updateSensor, filter)
+			checkBleError(err)
+		}
+	}()
 }
 
-func (this *Tpms) registerSensor(a ble.Advertisement) {
+func (this *Tpms) StopMonitoring() {
+
+}
+
+func (this *Tpms) Read() [4]*Sensor {
+	return this.sensors
+}
+
+func (this *Tpms) updateSensor(a ble.Advertisement) {
 	pos, _ := strconv.Atoi(string(a.LocalName()[4]))
 	if pos < 1 || pos > 4 {
 		return
@@ -85,7 +73,10 @@ func (this *Tpms) registerSensor(a ble.Advertisement) {
 			Id: pos,
 			Address: a.Addr(),
 		}
-		fmt.Printf("Sensor %d detected.\n", pos)
+		fmt.Printf("Sensor %d added.\n", pos)
+	}
+	if len(a.ManufacturerData()) > 0 {
+		this.sensors[pos-1].ParseData(a.ManufacturerData())
 	}
 }
 
