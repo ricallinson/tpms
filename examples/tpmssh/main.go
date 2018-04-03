@@ -4,8 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"github.com/ricallinson/tpms"
-	"time"
 	"log"
+	"time"
 )
 
 var (
