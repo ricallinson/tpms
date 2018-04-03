@@ -32,7 +32,7 @@ The API is simply creating an instance of Tpms, start monitoring and read the va
 
 There is an option for logging the raw data from the sensors. This will keep logging until `.StopMonitoring()` is called or the process is exited.
 
-	tires, err := tpms.NewTpms()
+	tires, _ := tpms.NewTpms()
 	tires.Log("/path/to/file")
 
 ## Example
