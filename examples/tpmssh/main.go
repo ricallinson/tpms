@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	duration = flag.Duration("duration", 0*time.Second, "monitoring duration Xs, 0 for indefinitely")
+	duration = flag.Duration("duration", 0, "monitoring duration Xs, 0 for indefinitely")
 )
 
 func main() {

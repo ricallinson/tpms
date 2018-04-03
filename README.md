@@ -21,3 +21,23 @@ There is an option for logging the raw data from the sensors. This will keep log
 
 	tires, err := tpms.NewTpms()
 	tires.Log("/path/to/file")
+
+## Example
+
+I've included a basic example of use. The following commands will compile the executable and run for 10 seconds.
+
+	cd ./examples/tmpssh
+	go build
+	./tmpssh -duration 10s
+
+Once compiled you can run it indefinitely by excluding the `-duration` argument.
+
+	./tmpssh
+
+Alternatively you can provide any number of seconds, minutes or hours for a monitoring duration.
+
+	./tmpssh -duration 30s
+	./tmpssh -duration 20m
+	./tmpssh -duration 24h
+
+In all cases a log file will be written to `./log` containing the raw sensor data as a byte stream.
