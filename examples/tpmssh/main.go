@@ -13,10 +13,9 @@ func main() {
 	for {
 		for _, sensor := range tires.Read() {
 			if sensor != nil {
-				fmt.Printf("ID: %d, kPa: %d, °C: %d\n", sensor.Id, sensor.Kilopascal, sensor.Celsius)
+				fmt.Printf("Sensor: %d, kPa: %d, °C: %d\n", sensor.Id, sensor.Kilopascal, sensor.Celsius)
 			}
 		}
-		fmt.Println()
 		time.Sleep(5 * time.Second)
 	}
 	tires.StopMonitoring()
