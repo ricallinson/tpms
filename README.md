@@ -17,7 +17,7 @@ The API is simply creating an instance of Tmps, start monitoring and read the va
 	defer tires.StopMonitoring()
 	sensors := tires.Read()
 
-There is an option for logging the raw data from the sensors. This will keep logging until `.StopMonitoring()` is called or the processes is exited.
+There is an option for logging the raw data from the sensors. This will keep logging until `.StopMonitoring()` is called or the process is exited.
 
 	tires, err := tpms.NewTpms()
 	tires.Log("/path/to/file")
