@@ -13,9 +13,9 @@ The API is simply creating an instance of Tpms, start monitoring and read the va
 	package main
 
 	import(
-			"fmt"
-			"github.com/ricallinson/tpms"
-		)
+		"fmt"
+		"github.com/ricallinson/tpms"
+	)
 
 	func main() {
 		tires, err := tpms.NewTpms()
