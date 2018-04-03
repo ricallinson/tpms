@@ -8,14 +8,27 @@ A Go library to read the tire pressures and temperatures from the [ZEEPIN TPMS S
 
 ## Usage
 
-The API is simply creating an instance of Tmps, start monitoring and read the values. The values are checked ever second but it depends on the sensors being active. In testing it took 10 minutes to retrieve all four sets of data when there were no pressure changes.
+The API is simply creating an instance of Tpms, start monitoring and read the values. The values are checked every second but it depends on the sensors being active. In testing it took 10 minutes to retrieve all four sets of data when there were no pressure changes.
 
-	import("github.com/ricallinson/tpms")
+	package main
 
-	tires, err := tpms.NewTpms()
-	tires.StartMonitoring()
-	defer tires.StopMonitoring()
-	sensors := tires.Read()
+	import(
+			"fmt"
+			"github.com/ricallinson/tpms"
+		)
+
+	func main() {
+		tires, err := tpms.NewTpms()
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		tires.StartMonitoring()
+		defer tires.StopMonitoring()
+		for tires.Read()[0] == nil {}
+		sensors := tires.Read()
+		fmt.Printf("%d kPa, °C %d\n", sensors[0].Kilopascal, sensors[0].Celsius)
+	}
 
 There is an option for logging the raw data from the sensors. This will keep logging until `.StopMonitoring()` is called or the process is exited.
 
