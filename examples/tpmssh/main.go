@@ -1,16 +1,28 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"github.com/ricallinson/tpms"
 	"time"
+	"log"
+)
+
+var (
+	duration = flag.Duration("duration", 0*time.Second, "monitoring duration Xs, 0 for indefinitely")
 )
 
 func main() {
-	tires := tpms.NewTpms()
+	flag.Parse()
+	tires, err := tpms.NewTpms()
+	if err != nil {
+		log.Fatal(err)
+	}
 	tires.Log("./log")
 	tires.StartMonitoring()
-	for {
+	start := time.Now()
+	defer tires.StopMonitoring()
+	for *duration == 0 || time.Now().Sub(start) < *duration {
 		for _, sensor := range tires.Read() {
 			if sensor != nil {
 				fmt.Printf("Sensor: %d, kPa: %d, °C: %d\n", sensor.Id, sensor.Kilopascal, sensor.Celsius)
@@ -18,5 +30,4 @@ func main() {
 		}
 		time.Sleep(5 * time.Second)
 	}
-	tires.StopMonitoring()
 }

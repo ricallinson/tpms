@@ -6,7 +6,6 @@ import (
 	"github.com/go-ble/ble"
 	"github.com/go-ble/ble/examples/lib/dev"
 	"github.com/pkg/errors"
-	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -16,26 +15,28 @@ import (
 type Tpms struct {
 	sensors [4]*Sensor
 	log     *os.File
+	running bool
 }
 
-func NewTpms() *Tpms {
+func NewTpms() (*Tpms, error) {
 	this := &Tpms{
 		sensors: [4]*Sensor{},
 	}
 	d, err := dev.NewDevice("default")
 	if err != nil {
-		fmt.Printf("can't new device : %s", err)
+		return nil, err
 	}
 	ble.SetDefaultDevice(d)
-	return this
+	return this, nil
 }
 
 func (this *Tpms) StartMonitoring() {
+	this.running = true
 	filter := func(a ble.Advertisement) bool {
 		return strings.HasPrefix(strings.ToUpper(a.LocalName()), "TPMS")
 	}
 	go func() {
-		for {
+		for this.running {
 			ctx := ble.WithSigHandler(context.WithTimeout(context.Background(), 1*time.Second))
 			err := ble.Scan(ctx, false, this.updateSensor, filter)
 			checkBleError(err)
@@ -43,16 +44,19 @@ func (this *Tpms) StartMonitoring() {
 	}()
 }
 
-func (this *Tpms) Log(file string) {
-	this.log, _ = os.Create(file)
-}
-
 func (this *Tpms) StopMonitoring() {
-
+	this.running = false
+	if this.log != nil {
+		this.log.Close()
+	}
 }
 
 func (this *Tpms) Read() [4]*Sensor {
 	return this.sensors
+}
+
+func (this *Tpms) Log(file string) {
+	this.log, _ = os.Create(file)
 }
 
 func (this *Tpms) updateSensor(a ble.Advertisement) {
@@ -65,7 +69,6 @@ func (this *Tpms) updateSensor(a ble.Advertisement) {
 			Id:      pos,
 			Address: a.Addr(),
 		}
-		fmt.Printf("Sensor %d added.\n", pos)
 	}
 	if len(a.ManufacturerData()) > 0 {
 		this.sensors[pos-1].ParseData(a.ManufacturerData())
@@ -92,7 +95,8 @@ func checkBleError(err error) bool {
 	case context.Canceled:
 		return true
 	default:
-		log.Fatalf(err.Error())
+		fmt.Println(err.Error())
+		return false
 	}
 	return false
 }

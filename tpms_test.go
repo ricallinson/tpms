@@ -11,7 +11,7 @@ func TestTpms(t *testing.T) {
 	var tires *Tpms
 
 	BeforeEach(func() {
-		tires = NewTpms()
+		tires, _ = NewTpms()
 	})
 
 	AfterEach(func() {
