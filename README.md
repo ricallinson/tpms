@@ -1,5 +1,7 @@
 # Tire Pressure Management System
 
+[![Build Status](https://travis-ci.org/ricallinson/tpms.svg?branch=master)](https://travis-ci.org/ricallinson/tpms) [![Build status](https://ci.appveyor.com/api/projects/status/pbndcrc64i8uhca6/branch/master?svg=true)](https://ci.appveyor.com/project/ricallinson/tpms/branch/master)
+
 A Go library to read the tire pressures and temperatures from the [ZEEPIN TPMS Sensor Bluetooth Low Energy Tire Pressure Monitoring System](https://www.amazon.com/gp/product/B079JXMM2P/ref=oh_aui_detailpage_o02_s00?ie=UTF8&psc=1).
 
 ## Install Example
