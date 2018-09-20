@@ -18,7 +18,7 @@ You should now see your command line interface. From here you will install the p
 	go install
 	tpmssh -duration 10s
 
-The `tpmssh` should now run for ten seconds.
+The `tpmssh` program should now run for ten seconds and then exit.
 
 For subsequent uses you only need to start the program. No need to install it again.
 
