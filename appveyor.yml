@@ -20,6 +20,7 @@ install:
   - go version
   # Install the dependencies.
   - go get github.com/mgutz/logxi/v1
+  - go get golang.org/x/sys/unix
   - go get github.com/go-ble/ble
   - go get github.com/ricallinson/simplebdd
 
