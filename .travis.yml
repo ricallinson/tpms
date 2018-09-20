@@ -3,7 +3,7 @@ go:
     - 1.10.2
     - tip
 install:
-    - go get github.com/mgutz/logxi
+    - go get github.com/mgutz/logxi/v1
     - go get golang.org/x/sys
     - go get github.com/go-ble/ble
     - go get github.com/ricallinson/simplebdd
