@@ -1,0 +1,9 @@
+language: go
+go:
+    - 1.10.2
+    - tip
+install:
+    - go get gopkg.in/go-ble
+    - go get github.com/ricallinson/simplebdd
+os:
+  - linux

@@ -1,0 +1,29 @@
+version: "{build}"
+
+# Build host
+
+environment:
+  GOPATH: c:\gopath
+  DEPTESTBYPASS501: 1
+  GOVERSION: 1.10.2
+
+init:
+  - git config --global core.autocrlf input
+
+# Build
+
+install:
+  # Install the specific Go version.
+  - rmdir c:\go /s /q
+  - appveyor DownloadFile https://dl.google.com/go/go1.10.2.windows-amd64.msi
+  - msiexec /i go%GOVERSION%.windows-amd64.msi /q
+  - go version
+  # Install the dependencies.
+  - go get gopkg.in/go-ble
+  - go get github.com/ricallinson/simplebdd
+
+build: false
+deploy: false
+
+test_script:
+  - go test
