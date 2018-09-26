@@ -22,7 +22,7 @@ func NewTpms() (*Tpms, error) {
 	this := &Tpms{
 		sensors: [4]*Sensor{},
 	}
-	d, err := dev.NewDevice("default")
+	d, err := dev.NewDevice("")
 	if err != nil {
 		return nil, err
 	}

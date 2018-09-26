@@ -9,3 +9,4 @@ install:
     - go get github.com/ricallinson/simplebdd
 os:
   - linux
+  - osx
