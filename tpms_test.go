@@ -15,7 +15,7 @@ func TestTpms(t *testing.T) {
 	})
 
 	AfterEach(func() {
-		tires.StopMonitoring()
+		// tires.StopMonitoring()
 	})
 
 	Describe("Tpms()", func() {
