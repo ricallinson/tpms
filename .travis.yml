@@ -3,7 +3,7 @@ go:
     - 1.10.2
     - tip
 install:
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then go get github.com/go-ble/ble; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then go get github.com/go-ble/ble && go get github.com/go-ble/ble/darwin; fi
     - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then GOOS=linux go get github.com/go-ble/ble && GOOS=linux go get github.com/go-ble/ble/linux; fi
     - go get github.com/pkg/errors
     - go get github.com/ricallinson/simplebdd
