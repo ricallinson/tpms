@@ -19,10 +19,8 @@ install:
   - msiexec /i go%GOVERSION%.windows-amd64.msi /q
   - go version
   # Install the dependencies.
-  - go get github.com/raff/goble/xpc
-  - go get github.com/mgutz/logxi/v1
-  - go get golang.org/x/sys/unix
   - go get github.com/go-ble/ble
+  - go get github.com/pkg/errors
   - go get github.com/ricallinson/simplebdd
 
 build: false
