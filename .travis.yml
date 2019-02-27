@@ -1,6 +1,7 @@
 language: go
 go:
     - 1.11
+    - 1.12
     - tip
 install:
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then go get github.com/go-ble/ble && go get github.com/go-ble/ble/darwin; fi
