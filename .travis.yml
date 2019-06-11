@@ -1,13 +1,25 @@
 language: go
-go:
-    - 1.11
-    - 1.12
-    - tip
-install:
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then go get github.com/go-ble/ble && go get github.com/go-ble/ble/darwin; fi
-    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then GOOS=linux go get github.com/go-ble/ble && GOOS=linux go get github.com/go-ble/ble/linux; fi
-    - go get github.com/pkg/errors
-    - go get github.com/ricallinson/simplebdd
 os:
-  - linux
-  - osx
+- linux
+- osx
+matrix:
+  include:
+  - go: 1.x
+    env: LATEST=true
+  allow_failures:
+  - tip
+install:
+- go get golang.org/x/tools/cmd/cover
+- go get github.com/mattn/goveralls
+# - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then go get github.com/go-ble/ble && go get
+#   github.com/go-ble/ble/darwin; fi
+# - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then GOOS=linux go get github.com/go-ble/ble
+#   && GOOS=linux go get github.com/go-ble/ble/linux; fi
+- go get ./...
+script:
+- go test -v -covermode=count -coverprofile=coverage.out
+- "$HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken
+  $COVERALLS_TOKEN"
+env:
+  global:
+    secure: otO5BDzuKF9748uydJ8anQdGrkJsjPWHDfBJCUhhaPDjFbIjzOgReMr4ydHRQS6SAL0S+xBuN7Gg/RWDGwotnNjyokv5bX+00lo/3hL5TqkH6L6Xu0sgbhNGDH4OP/oFrub/I8AlWuXaENWosiulS3739boErkgB9DWJ72a0FrkN11r5kEPtcfznr1jFplVJ+peNxMCabLRcS5b3JKT/5SPlc2ZQ4SGVrFhG4WSeGJJ0TvW638PH1rLkqKStYL0egOf0Rz9Paz/wTKNTo+ZODURxPXSnddQr2+Lytdko0QA1/lcLsrtyqaJT/dm1WXXAWTF6JGJ5U1jpZf9/XEzHl+AS6nyapBryqZsERrUowEVVVU7qzHYcfqLUTKHOP36H3J7uR577IBqqv7XgtW5eL01rF+KVhZJP+BxVIPc5azMcjtcxCHemrzrGUp/YsUIlObC0RhlVRG3RzyJDRao6a3el11KbEYcnc/XktXOlnYcu62XuvPEntw001WavVSYXvwRn3Qy9EPYl2PA8dAUdguoutlRIfLzhmkhH/j182/1KA889WyRMC/lFTFJ8jmaQstOtoEcuYDuhYIHWVRaGiuExGrnLMy3e8FELt9hr3epZtXTCCk3ub6/ABsNtOJd50yvQh4Al8wxC5lgNkqx9FZfgOuIz+ZAk8mBo586Lgo8=

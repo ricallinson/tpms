@@ -1,6 +1,6 @@
 # Tire Pressure Management System
 
-[![Build Status](https://travis-ci.org/ricallinson/tpms.svg?branch=master)](https://travis-ci.org/ricallinson/tpms) [![Build status](https://ci.appveyor.com/api/projects/status/pbndcrc64i8uhca6/branch/master?svg=true)](https://ci.appveyor.com/project/ricallinson/tpms/branch/master)
+[![Build Status](https://travis-ci.org/ricallinson/tpms.svg?branch=master)](https://travis-ci.org/ricallinson/tpms) [![Build status](https://ci.appveyor.com/api/projects/status/pbndcrc64i8uhca6/branch/master?svg=true)](https://ci.appveyor.com/project/ricallinson/tpms/branch/master) [![Coverage Status](https://coveralls.io/repos/github/ricallinson/tpms/badge.svg?branch=master)](https://coveralls.io/github/ricallinson/tpms?branch=master)
 
 A Go library to read the tire pressures and temperatures from the [ZEEPIN TPMS Sensor Bluetooth Low Energy Tire Pressure Monitoring System](https://www.amazon.com/gp/product/B079JXMM2P/ref=oh_aui_detailpage_o02_s00?ie=UTF8&psc=1).
 
@@ -9,7 +9,6 @@ A Go library to read the tire pressures and temperatures from the [ZEEPIN TPMS S
 You must first install the `Go` environment for your operating system from [golang.org](https://golang.org/dl/). Once installed open your terminal program.
 
 * MAC: Terminal. To open the terminal, `apple+space` and type `terminal`.
-* Windows: Command Prompt. To open the command prompt, `windows+r` and type `cmd`.
 * Linux: If you don't know you shouldn't be using Linux.
 
 You should now see your command line interface. From here you will install the program and execute it. Enter the following at the command line;
