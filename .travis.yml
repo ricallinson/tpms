@@ -11,11 +11,12 @@ matrix:
 install:
 - go get golang.org/x/tools/cmd/cover
 - go get github.com/mattn/goveralls
+- go get github.com/ricallinson/simplebdd
+- go get ./...
 # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then go get github.com/go-ble/ble && go get
 #   github.com/go-ble/ble/darwin; fi
 # - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then GOOS=linux go get github.com/go-ble/ble
 #   && GOOS=linux go get github.com/go-ble/ble/linux; fi
-- go get ./...
 script:
 - go test -v -covermode=count -coverprofile=coverage.out
 - "$HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken
