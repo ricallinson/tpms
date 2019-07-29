@@ -2,6 +2,8 @@ version: "{build}"
 
 # Build host
 
+clone_folder: c:\gopath\src\github.com\$username\$project
+
 environment:
   GOPATH: c:\gopath
   DEPTESTBYPASS501: 1
@@ -19,7 +21,6 @@ install:
   - msiexec /i go%GOVERSION%.windows-amd64.msi /q
   - go version
   # Install the dependencies.
-  - cd C:\projects\tpms
   - go get github.com/ricallinson/simplebdd
   - go get ./...
 
