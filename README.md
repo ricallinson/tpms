@@ -14,9 +14,12 @@ You must first install the `Go` environment for your operating system from [gola
 You should now see your command line interface. From here you will install the program and execute it. Enter the following at the command line;
 
 	go get github.com/ricallinson/tpms
-	go install github.com/ricallinson/tpms
+	cd $GOPATH/src/github.com/ricallinson/tpms
+	go get ./...
+
 	cd $GOPATH/src/github.com/ricallinson/tpms/examples/tpmssh
 	go install
+	
 	tpmssh -duration 10s
 
 The `tpmssh` program should now run for ten seconds and then exit.

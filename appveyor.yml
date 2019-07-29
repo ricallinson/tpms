@@ -19,6 +19,7 @@ install:
   - msiexec /i go%GOVERSION%.windows-amd64.msi /q
   - go version
   # Install the dependencies.
+  cd C:\projects\tpms
   - go get github.com/ricallinson/simplebdd
   - go get ./...
 
