@@ -19,9 +19,8 @@ install:
   - msiexec /i go%GOVERSION%.windows-amd64.msi /q
   - go version
   # Install the dependencies.
-  - go get github.com/go-ble/ble
-  - go get github.com/pkg/errors
   - go get github.com/ricallinson/simplebdd
+  - go get ./...
 
 build: false
 deploy: false
