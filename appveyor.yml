@@ -2,7 +2,7 @@ version: "{build}"
 
 # Build host
 
-clone_folder: c:\gopath\src\github.com\$username\$project
+clone_folder: c:\gopath\src\github.com\ricallinson\tpms
 
 environment:
   GOPATH: c:\gopath
