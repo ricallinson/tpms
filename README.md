@@ -10,6 +10,7 @@ You must first install the `Go` environment for your operating system from [gola
 
 * MAC: Terminal. To open the terminal, `apple+space` and type `terminal`.
 * Linux: If you don't know you shouldn't be using Linux.
+* Windows: Not supported.
 
 You should now see your command line interface. From here you will install the program and execute it. Enter the following at the command line;
 
@@ -19,7 +20,7 @@ You should now see your command line interface. From here you will install the p
 
 	cd $GOPATH/src/github.com/ricallinson/tpms/examples/tpmssh
 	go install
-	
+
 	tpmssh -duration 10s
 
 The `tpmssh` program should now run for ten seconds and then exit.
